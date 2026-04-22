@@ -47,33 +47,6 @@ fs-basic/
 └── .gitignore                   # Git ignore rules
 ```
 
-
-## Database Models
-
-### Organization
-Represents a tenant/organization in the system.
-- `name`: Organization name (max 255 characters)
-- `is_active`: Boolean flag for active status
-- `created_at`: Timestamp of creation
-
-### User
-Custom user model extending Django's AbstractUser with multi-tenancy support.
-- Extends Django's AbstractUser (includes username, email, password, etc.)
-- `organization`: ForeignKey to Organization (nullable for super admins)
-- `role`: Choices - SUPER_ADMIN, ADMIN, MEMBER
-
-### Member
-Represents organization members/customers (can exist without linked user accounts).
-- `organization`: ForeignKey to Organization
-- `user`: Optional OneToOneField to User (for offline customers)
-- `membership_number`: Unique membership identifier
-- `name`: Full name
-- `email`: Contact email
-- `phone_number`: Contact phone
-- `member_type`: LIFETIME or NORMAL
-- `job`: Job title/position
-- `mailing_address`: Physical address
-
 ## Installation & Setup
 
 ### Prerequisites
