@@ -34,13 +34,13 @@ class Member(models.Model):
         LIFETIME = "LIFETIME", "Lifetime"
         NORMAL = "NORMAL", "Normal"
 
-    # LINK IS NOW OPTIONAL (For offline customers)
+    # LINK IS NOW OPTIONAL (For offline members)
     user = models.OneToOneField(
         User, 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 
-        related_name='customer_profile'
+        related_name='member_profile'
     )
     
     membership_number = models.CharField(max_length=20, blank=True)
