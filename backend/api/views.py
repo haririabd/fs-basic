@@ -98,7 +98,9 @@ class MemberViewSet(viewsets.ModelViewSet):
                 {"error": str(e)}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
+# Organizations is kept read-only so random users can't create orphan orgs or cannot accidentally delete the entire tenant database
+# Organization can only be created during registration
 class OrganizationViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OrganizationSerializer
     # We can stick to IsAdminOrReadOnly here since members shouldn't create Orgs anyway
