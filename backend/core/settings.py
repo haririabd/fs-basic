@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'api',                 # <--- Local
+    'commando',
 ]
 
 MIDDLEWARE = [
