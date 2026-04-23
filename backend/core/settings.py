@@ -232,6 +232,9 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
+# CRITICAL: Custom User Model
+AUTH_USER_MODEL = 'api.User'
+
 # Codespace Overrides
 if ON_CODESPACE:
     codespace_name = os.getenv("CODESPACE_NAME")
@@ -246,12 +249,10 @@ if ON_CODESPACE:
         backend_url = f"https://{codespace_name}-8000.{codespace_domain}"
         CSRF_TRUSTED_ORIGINS.append(backend_url)
 
-# CRITICAL: Custom User Model
-AUTH_USER_MODEL = 'api.User'
+    # Tells Django to read the proxy headers from Codespaces to construct URLs properly
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-#check if using codespace
-
-if ON_CODESPACE:
     INSTALLED_APPS += [
         'django_browser_reload',
     ]
