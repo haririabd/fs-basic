@@ -1,11 +1,12 @@
-# FS Basic
+# Full Stack Basic
 
 A modern, production-ready Django + React SaaS boilerplate with built-in multi-tenancy, role-based access control (RBAC), and enterprise-grade authentication.
 
 **Perfect for building multi-tenant SaaS applications, CRM systems, or any platform where users belong to organizations.**
 
----
+Notes: All port in below examples are set as 0000. Use your own port where applicable
 
+---
 ## 🚀 Key Features
 
 ### Core Features
@@ -161,9 +162,9 @@ python manage.py createsuperuser
 # 8. Start development server
 python manage.py runserver
 
-# Server runs at http://localhost:8000
-# Admin at http://localhost:8000/admin
-# API at http://localhost:8000/api/
+# Server runs at http://localhost:0000
+# Admin at http://localhost:0000/admin
+# API at http://localhost:0000/api/
 ```
 
 #### Frontend Setup
@@ -175,7 +176,7 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start dev server (runs on http://localhost:5173)
+# Start dev server (runs on http://localhost:0000)
 npm run dev
 
 # Build for production
@@ -203,11 +204,11 @@ DJANGO_SECRET_KEY=your-secret-key   # Generate with get_random_secret_key()
 
 # Frontend URL (for email links, CORS, CSRF)
 # Examples:
-#   Local: http://localhost:3000
+#   Local: http://localhost:0000
 #   Railway: https://fs-basic-frontend.railway.app
 #   VPS: https://example.com
 #   Vercel: https://your-app.vercel.app
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:0000
 
 # ============================================
 # OPTIONAL (has sensible defaults)
@@ -218,17 +219,17 @@ FRONTEND_URL=http://localhost:3000
 ALLOWED_HOSTS=localhost,127.0.0.1
 
 # CORS allowed origins (comma-separated)
-# Default: http://localhost:3000,http://localhost:5173
-CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+# Default: http://localhost:0000,http://localhost:0000
+CORS_ALLOWED_ORIGINS=http://localhost:0000,http://localhost:0000
 
 # CSRF trusted origins (comma-separated)
-# Default: http://localhost:3000,http://localhost:5173
-CSRF_TRUSTED_ORIGINS=http://localhost:3000,http://localhost:5173
+# Default: http://localhost:0000,http://localhost:0000
+CSRF_TRUSTED_ORIGINS=http://localhost:0000,http://localhost:0000
 
 # Database URL (PostgreSQL connection string)
 # Leave empty for SQLite (development only)
 # Format: postgresql://user:password@host:port/dbname
-# Example: postgresql://postgres:password@localhost:5432/fs_basic
+# Example: postgresql://postgres:password@localhost:0000/fs_basic
 DATABASE_URL=
 
 # ============================================
@@ -337,7 +338,7 @@ GRANT ALL PRIVILEGES ON DATABASE fs_basic TO fs_basic_user;
 \q
 
 # 8. Update DATABASE_URL in .env
-DATABASE_URL=postgresql://fs_basic_user:your-secure-password@localhost:5432/fs_basic
+DATABASE_URL=postgresql://fs_basic_user:your-secure-password@localhost:0000/fs_basic
 
 # 9. Run migrations
 python manage.py migrate
@@ -368,7 +369,7 @@ User=www-data
 WorkingDirectory=/opt/fs-basic/backend
 ExecStart=/opt/fs-basic/backend/venv/bin/gunicorn \
     --workers 4 \
-    --bind 127.0.0.1:8000 \
+    --bind 127.0.0.1:0000 \
     --timeout 120 \
     core.wsgi:application
 
@@ -389,7 +390,7 @@ sudo systemctl enable fs-basic-backend
 **Configure Nginx** (`/etc/nginx/sites-available/fs-basic`):
 ```nginx
 upstream fs_basic_backend {
-    server 127.0.0.1:8000;
+    server 127.0.0.1:0000;
 }
 
 server {
@@ -444,7 +445,7 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "core.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:0000", "--workers", "4", "core.wsgi:application"]
 ```
 
 **docker-compose.yml**:
@@ -464,12 +465,12 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "0000:0000"
     environment:
       DJANGO_DEBUG: 'False'
       DJANGO_SECRET_KEY: your-secret-key
-      FRONTEND_URL: http://localhost:3000
-      DATABASE_URL: postgresql://fs_basic_user:secure_password@postgres:5432/fs_basic
+      FRONTEND_URL: http://localhost:0000
+      DATABASE_URL: postgresql://fs_basic_user:secure_password@postgres:0000/fs_basic
     depends_on:
       - postgres
     volumes:
@@ -480,11 +481,11 @@ services:
     working_dir: /app
     command: npm run dev
     ports:
-      - "5173:5173"
+      - "0000:0000"
     volumes:
       - ./frontend:/app
     environment:
-      VITE_API_URL: http://localhost:8000
+      VITE_API_URL: http://localhost:0000
 
 volumes:
   postgres_data:
@@ -708,14 +709,14 @@ pip install -r requirements.txt
 ### Issue: "CORS error on frontend"
 **Solution**: Check CORS_ALLOWED_ORIGINS in `.env`:
 ```bash
-CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+CORS_ALLOWED_ORIGINS=http://localhost:0000,http://localhost:0000
 ```
 
 ### Issue: Database connection error
 **Solution**: Verify DATABASE_URL:
 ```bash
 # For PostgreSQL
-DATABASE_URL=postgresql://user:password@localhost:5432/fs_basic
+DATABASE_URL=postgresql://user:password@localhost:0000/fs_basic
 
 # For SQLite (leave empty)
 DATABASE_URL=
