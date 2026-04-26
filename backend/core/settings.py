@@ -162,6 +162,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # ==========================================
 # ALLAUTH HEADLESS SETTINGS
 # ==========================================
+# Use custom form for registration
+ACCOUNT_SIGNUP_FORM_CLASS = 'api.forms.CustomSignupForm'
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['username', 'email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = 'none'
