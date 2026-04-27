@@ -14,8 +14,8 @@ class MemberSerializer(serializers.ModelSerializer):
         model = Member
         fields = [
             'id', 
-            'name',           # <--- Input this now
-            'email',          # <--- Input this now
+            'name',
+            'email',
             'phone_number', 
             'member_type', 
             'mailing_address', 
